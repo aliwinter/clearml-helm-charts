@@ -44,6 +44,7 @@ spec:
         {{- end }}
       securityContext:
         {{ toYaml .Values.fileserver.podSecurityContext | nindent 8 }}
+      {{- if .Values.fileserver.initContainer }}
       initContainers:
         - name: init-fileserver
           image: "{{ include "registryNamePrefix" (dict "globalValues" .Values.global "imageRegistryValue" .Values.fileserver.image.registry) }}{{ .Values.fileserver.image.repository }}:{{ .Values.fileserver.image.tag }}"
